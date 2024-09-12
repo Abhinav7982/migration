@@ -1,0 +1,51 @@
+name: dbt CI  # Name of your workflow
+
+on:
+  push:
+    branches:
+      - master  # Run the workflow on pushes to the master branch
+      - development  # Run the workflow on pushes to the development branch
+  pull_request:
+    branches:
+      - master  # Run the workflow on pull requests to the master branch
+      - development  # Run the workflow on pull requests to the development branch
+
+jobs:
+  dbt_tests:
+    runs-on: ubuntu-latest  # Use the latest version of Ubuntu as the environment
+
+    steps:
+      # Check out the repository code
+      - uses: actions/checkout@v2
+
+      # Set up Python environment
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      # Install dbt (with the specific adapter you're using, e.g., dbt-snowflake)
+      - name: Install dbt
+        run: |
+          pip install dbt-snowflake  # Replace with your required adapter (e.g., dbt-bigquery, dbt-redshift)
+
+      # Install dbt-databricks
+      - name: Install dbt
+        run: |
+          pip install dbt-databricks
+
+      # Set up the dbt profiles.yml
+      - name: Set up dbt profiles.yml
+        run: |
+          mkdir -p ~/.dbt
+          echo "$DBT_PROFILES_YML" > ~/.dbt/profiles.yml
+        env:
+          DBT_PROFILES_YML: ${{ secrets.DBT_PROFILES_YML }}
+
+      # Run dbt commands (these may vary based on your project)
+      - name: Run dbt models
+        run: |
+          dbt deps  # Install dependencies from packages.yml
+          dbt seed  # Load seed data if your project uses seeds
+          dbt run  # Build your dbt models
+          dbt test  # Run tests defined in your models and data tests
