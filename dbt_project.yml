@@ -27,8 +27,7 @@ jobs:
           pip install dbt databricks-cli
 
       - name: Install dbt dependencies
-        run: |
-          dbt deps
+        run: dbt deps
 
       - name: Run dbt commands
         # Here you define environment variables for dbt and Databricks
@@ -40,3 +39,29 @@ jobs:
         run: |
           dbt run
           dbt test
+
+      - name: Generate dbt documentation
+        env:
+          DBT_PROFILES_DIR: ${{ secrets.DBT_PROFILES_DIR }}
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          DBT_TARGET: prod
+        run: dbt docs generate
+
+      - name: Upload dbt documentation artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dbt-docs
+          path: ./target
+
+      # Optional: Integrate external data quality monitoring tools like Great Expectations
+      - name: Run external data quality checks
+        run: |
+          great_expectations checkpoint run my_checkpoint
+
+      # Optional: Deploy dbt documentation (e.g., GitHub Pages)
+      - name: Deploy dbt docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./target
