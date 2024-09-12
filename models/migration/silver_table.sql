@@ -5,8 +5,7 @@ WITH raw_data AS (
 silver_table AS (
     SELECT 
         Invoice, 
-        StockCode, 
-        Description, 
+        StockCode,  
         Quantity, 
         InvoiceDate, 
         Price,
