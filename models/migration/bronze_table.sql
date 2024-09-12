@@ -1,0 +1,1 @@
+SELECT * FROM {{ source('abhi', 'online_retail_ii') }}

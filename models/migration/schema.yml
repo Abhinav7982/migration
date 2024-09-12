@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: abhi
+    tables:
+      - name: online_retail_ii
+models:
+  - name: silver_table
+    description: "Cleaned and transformed data from the bronze table."
+  - name: gold_table
+    description: "Business-ready data for reporting and analytics."
