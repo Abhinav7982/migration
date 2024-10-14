@@ -3,11 +3,11 @@ name: dbt CI  # Name of your workflow
 on:
   push:
     branches:
-      - master  # Run the workflow on pushes to the master branch
+      - main  # Run the workflow on pushes to the master branch
       - development  # Run the workflow on pushes to the development branch
   pull_request:
     branches:
-      - master  # Run the workflow on pull requests to the master branch
+      - main  # Run the workflow on pull requests to the master branch
       - development  # Run the workflow on pull requests to the development branch
 
 jobs:
