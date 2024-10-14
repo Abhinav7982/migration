@@ -13,7 +13,7 @@ silver_table AS (
         Country
     FROM raw_data
     WHERE Country = 'United Kingdom'
-      AND Quantity > 0  -- Remove invalid quantities
+      AND Quantity > 5  -- Remove invalid quantities
       AND Price > 6  -- Keep only rows with price greater than 6
 )
 
