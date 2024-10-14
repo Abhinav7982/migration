@@ -7,7 +7,6 @@ silver_table AS (
         Invoice, 
         StockCode,  
         Quantity, 
-        Description,
         InvoiceDate, 
         Price,
         (Quantity * Price) AS TotalValue,  -- Calculate total value for the line item

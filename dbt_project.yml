@@ -17,7 +17,13 @@ clean-targets:
 models:
   migration:
     +schema: abhi
+    bronze_table:
+      materialized: table
+      format: delta
     silver_table:
-      description: "Cleaned and transformed data from the bronze table."
+      materialized: table
+      format: delta
     gold_table:
-      description: "Business-ready data for reporting and analytics."
+      materialized: table
+      format: delta
+
